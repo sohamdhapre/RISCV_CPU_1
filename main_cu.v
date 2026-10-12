@@ -23,6 +23,15 @@ module main_control
                 alu_op    = 2'b10; // 10 means "Look at funct3/funct7"
             end
             
+            //I-Type Arith
+            7'b0010011:
+            begin
+                alu_src_2 = 1;
+                reg_write = 1;
+                alu_op = 2'b11; 
+            end
+
+
             7'b0000011: 
             begin // I-Type Load (LW)
                 reg_write  = 1;
@@ -30,6 +39,13 @@ module main_control
                 mem_read   = 1;
                 mem_to_reg = 1; // Register gets data from Memory
                 alu_op     = 2'b00; // 00 means "Always ADD" (for addr calculation)
+            end
+
+            7'b0100011:
+            begin //S-type, Store Word
+            mem_write = 1;
+            alu_src_2 = 1;
+            alu_op = 2'b00;
             end
             
             7'b1100011: 
